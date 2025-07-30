@@ -51,6 +51,25 @@ namespace Postmonster.Runtime
             }
         }
 
+        [JsonIgnore]
+        public PRQueryParamList query { get; set; } = new();
+
+        [JsonProperty("query")]
+        private object? queryRaw
+        {
+            get => query.ToList();
+            set => query = ParseQueryList(value);
+        }
+
+        private static PRQueryParamList ParseQueryList(object? value)
+        {
+            if (value is JArray array && array.ToObject<List<PRQueryParam>>() is List<PRQueryParam> list)
+                return new PRQueryParamList(list);
+
+            return new PRQueryParamList();
+        }
+
+
         public PRRequestBody? body { get; set; }
     }
 
