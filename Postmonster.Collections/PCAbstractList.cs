@@ -25,16 +25,16 @@ namespace Postmonster.Collections
     {
     }
 
-    public abstract class PCAbstractItemList<T> : IEnumerable<T> where T : IPCValuedItem, new()
+    public abstract class PCAbstractList<T> : IEnumerable<T> where T : IPCValuedItem, new()
     {
         protected readonly List<T> _items = new();
 
         protected abstract string GetKey(T item);
         protected abstract void SetKey(T item, string key);
 
-        protected PCAbstractItemList() { }
+        protected PCAbstractList() { }
 
-        protected PCAbstractItemList(IEnumerable<T> items)
+        protected PCAbstractList(IEnumerable<T> items)
         {
             _items.AddRange(items);
         }
@@ -81,7 +81,7 @@ namespace Postmonster.Collections
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class PCKeyedListOf<T> : PCAbstractItemList<T> where T: IPCKeyedValueItem, new()
+    public class PCKeyedListOf<T> : PCAbstractList<T> where T: IPCKeyedValueItem, new()
     {
         public PCKeyedListOf() : base() { }
         public PCKeyedListOf(IEnumerable<T> items) : base(items) { }
@@ -89,7 +89,7 @@ namespace Postmonster.Collections
         protected override void SetKey(T item, string key) => item.Key = key;
     }
 
-    public class PCNamedListOf<T> : PCAbstractItemList<T> where T : IPCNamedValueItem, new()
+    public class PCNamedListOf<T> : PCAbstractList<T> where T : IPCNamedValueItem, new()
     {
         public PCNamedListOf() : base() { }
         public PCNamedListOf(IEnumerable<T> items) : base(items) { }

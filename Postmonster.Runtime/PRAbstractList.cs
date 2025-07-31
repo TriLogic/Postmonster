@@ -30,16 +30,16 @@ namespace Postmonster.Runtime
     {
     }
 
-    public abstract class PRAbstractItemList<T> : IEnumerable<T> where T : IPRValuedItem, new()
+    public abstract class PRAbstractList<T> : IEnumerable<T> where T : IPRValuedItem, new()
     {
         protected readonly List<T> _items = new();
 
         protected abstract string GetKey(T item);
         protected abstract void SetKey(T item, string key);
 
-        protected PRAbstractItemList() { }
+        protected PRAbstractList() { }
 
-        protected PRAbstractItemList(IEnumerable<T> items)
+        protected PRAbstractList(IEnumerable<T> items)
         {
             _items.AddRange(items);
         }
@@ -86,7 +86,7 @@ namespace Postmonster.Runtime
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class PRKeyedListOf<T> : PRAbstractItemList<T> where T : IPRKeyedValueItem, new()
+    public class PRKeyedListOf<T> : PRAbstractList<T> where T : IPRKeyedValueItem, new()
     {
         public PRKeyedListOf() : base() { }
         public PRKeyedListOf(IEnumerable<T> items) : base(items) { }
@@ -94,7 +94,7 @@ namespace Postmonster.Runtime
         protected override void SetKey(T item, string key) => item.key = key;
     }
 
-    public class PRNamedListOf<T> : PRAbstractItemList<T> where T : IPRNamedValueItem, new()
+    public class PRNamedListOf<T> : PRAbstractList<T> where T : IPRNamedValueItem, new()
     {
         public PRNamedListOf() : base() { }
         public PRNamedListOf(IEnumerable<T> items) : base(items) { }
