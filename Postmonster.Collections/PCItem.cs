@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Collections
 {
-    public class PCItem
+    public interface IPCItem
+    {
+        public string Name { get; set; }
+        public IPCItem? Parent { get; set; }
+        public PCItem? Prev { get; set; }
+        public PCItem? Next { get; set; }
+        public List<PCItem>? Items { get; set; }
+        public bool HasChildren();
+    }
+
+    public class PCItem : IPCItem
     {
         [JsonProperty("name")]
         public string Name { get; set; } = "";
 
         [JsonProperty("item")]
-        public List<PCItem>? SubItems { get; set; } // If it's a folder
+        public List<PCItem>? Items { get; set; } // If it's a folder
 
         [JsonProperty("request")]
         public PCRequest? Request { get; set; } // If it's a request
@@ -23,5 +33,18 @@ namespace Postmonster.Collections
 
         [JsonProperty("event")]
         public List<PCEvent>? Event { get; set; }
+
+        #region IPCItem Collection Extensions
+        [JsonIgnore()]
+        public IPCItem? Parent { get; set; }
+
+        [JsonIgnore()]
+        public PCItem? Prev { get; set; }
+
+        [JsonIgnore()]
+        public PCItem? Next { get; set; }
+        public bool HasChildren() => Items?.Count > 0;
+        #endregion
     }
 }
+

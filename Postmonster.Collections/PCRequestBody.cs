@@ -14,10 +14,10 @@ namespace Postmonster.Collections
         public PCRequestBodyOptions? Options { get; set; }
 
         [JsonProperty("formdata")]
-        public List<PCFormDataField>? FormData { get; set; }
+        public PCUrlEncodedFieldList? FormData { get; set; }
 
         [JsonProperty("urlencoded")]
-        public List<PCUrlEncodedField>? UrlEncoded { get; set; }
+        public PCUrlEncodedFieldList? UrlEncoded { get; set; }
 
         [JsonProperty("file")]
         public PCFile? File { get; set; }
@@ -50,7 +50,13 @@ namespace Postmonster.Collections
         public bool? TrimRequestBody { get; set; }
     }
 
-    public class PCFormDataField
+    public class PCFormDataFieldList : PCKeyedListOf<PCFormDataField>
+    {
+        public PCFormDataFieldList() : base() { }
+        public PCFormDataFieldList(IEnumerable<PCFormDataField> items) : base(items) { }
+    }
+
+    public class PCFormDataField : IPCKeyedValueItem
     {
         [JsonProperty("key")]
         public string Key { get; set; } = string.Empty;
@@ -71,7 +77,13 @@ namespace Postmonster.Collections
         public bool? Disabled { get; set; }
     }
 
-    public class PCUrlEncodedField
+    public class PCUrlEncodedFieldList : PCKeyedListOf<PCUrlEncodedField>
+    {
+        public PCUrlEncodedFieldList() : base() { }
+        public PCUrlEncodedFieldList(IEnumerable<PCUrlEncodedField> items) : base(items) { }
+    }
+
+    public class PCUrlEncodedField : IPCKeyedValueItem
     {
         [JsonProperty("key")]
         public string Key { get; set; } = string.Empty;

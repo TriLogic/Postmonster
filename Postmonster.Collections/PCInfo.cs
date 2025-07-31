@@ -10,7 +10,7 @@ namespace Postmonster.Collections
     public class PCInfo
     {
         [JsonProperty("name")]
-        public string Name { get; set; } = "My Collection";
+        public string Name { get; set; } = "Postmonster Collection";
 
         [JsonProperty("_postman_id")]
         public string PostmanId { get; set; } = Guid.NewGuid().ToString();
