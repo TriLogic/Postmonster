@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Postmaster.Chai\Postmonster.Asserts.csproj" />
+    <ProjectReference Include="..\Postmonster.Asserts\Postmonster.Asserts.csproj" />
   </ItemGroup>
 
 </Project>
