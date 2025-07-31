@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Collections
 {
-    public class PCHeader
+    public class PCHeaderItem : IPCKeyedValueItem
     {
         [JsonProperty("key")]
         public string Key { get; set; } = "";
 
         [JsonProperty("value")]
-        public string Value { get; set; } = "";
+        public string? Value { get; set; } = "";
 
         [JsonProperty("description")]
         public string? Description { get; set; }

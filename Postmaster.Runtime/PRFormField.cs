@@ -1,7 +1,7 @@
 ﻿
 namespace Postmonster.Runtime
 {
-    public class PRFormField : IPRKeyedValueLike
+    public class PRFormField : IPRKeyedValue
     {
         public string key { get; set; } = "";
 

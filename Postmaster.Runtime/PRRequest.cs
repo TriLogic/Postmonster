@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Postmonster.Runtime
 {
-    public class PRRequest
+    public partial class PRRequest
     {
         public string url { get; set; } = "";
         public string method { get; set; } = "GET";

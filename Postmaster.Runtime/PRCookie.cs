@@ -2,7 +2,7 @@
 
 namespace Postmonster.Runtime
 {
-    public class PRCookie : IPRKeyedValueLike
+    public class PRCookie : IPRKeyedValue
     {
         public string name { get; set; } = string.Empty;
 

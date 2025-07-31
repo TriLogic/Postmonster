@@ -22,7 +22,7 @@ namespace Postmonster.Collections
         public int Code { get; set; }
 
         [JsonProperty("header")]
-        public List<PCHeader>? Header { get; set; }
+        public List<PCHeaderItem>? Header { get; set; }
 
         [JsonProperty("body")]
         public string? Body { get; set; }

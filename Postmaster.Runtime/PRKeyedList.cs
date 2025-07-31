@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Runtime
 {
-    public interface IPRKeyedValueLike
+    public interface IPRKeyedValue
     {
         public string? value { get; set; }
     }
 
-    public abstract class PRKeyedList<T> : IEnumerable<T> where T : IPRKeyedValueLike, new()
+    public abstract class PRKeyedList<T> : IEnumerable<T> where T : IPRKeyedValue, new()
     {
         protected readonly List<T> _items = new();
 

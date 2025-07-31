@@ -8,13 +8,13 @@ namespace Postmonster.Runtime
 
         public PRResponse response { get; set; } = new();
 
-        public PRVariableScope environment { get; set; } = new();
+        public PRVariables environment { get; set; } = new();
 
-        public PRVariableScope globals { get; set; } = new();
+        public PRVariables globals { get; set; } = new();
 
-        public PRVariableScope variables { get; set; } = new();
+        public PRVariables variables { get; set; } = new();
 
-        public PRVariableScope collectionVariables { get; set; } = new();
+        public PRVariables collectionVariables { get; set; } = new();
 
         public Dictionary<string, string> iterationData { get; set; } = new();
 

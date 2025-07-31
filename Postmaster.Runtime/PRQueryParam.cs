@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Runtime
 {
-    public class PRQueryParam : IPRKeyedValueLike
+    public class PRQueryParam : IPRKeyedValue
     {
         public string key { get; set; } = "";
         public string value { get; set; } = "";

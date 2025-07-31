@@ -2,7 +2,7 @@
 
 namespace Postmonster.Runtime
 {
-    public class PRHeader : IPRKeyedValueLike
+    public class PRHeader : IPRKeyedValue
     {
         public string key { get; set; } = "";
         public string value { get; set; } = "";

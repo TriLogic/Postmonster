@@ -28,7 +28,7 @@ namespace Postmonster.Collections
         public List<PCUrlVariable>? Variable { get; set; }
     }
 
-    public class PCQueryParam
+    public class PCQueryParam : IPCKeyedValueItem
     {
         [JsonProperty("key")]
         public string Key { get; set; } = "";
@@ -43,7 +43,7 @@ namespace Postmonster.Collections
         public bool? Disabled { get; set; }
     }
 
-    public class PCUrlVariable
+    public class PCUrlVariable : IPCKeyedValueItem
     {
         [JsonProperty("key")]
         public string Key { get; set; } = "";
