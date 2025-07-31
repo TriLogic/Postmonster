@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Runtime
 {
-    public class PRCookieList : PRKeyedList<PRCookie>
+    public class PRCookieList : PRNamedListOf<PRCookie>
     {
-        protected override string GetKey(PRCookie item) => item.name;
-        protected override void SetKey(PRCookie item, string key) => item.name = key;
+        public PRCookieList() : base() { }
+        public PRCookieList(IEnumerable<PRCookie> items) : base(items) { }
     }
 }

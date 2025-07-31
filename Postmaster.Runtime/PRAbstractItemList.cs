@@ -7,21 +7,39 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Runtime
 {
-    public interface IPRKeyedValue
+    public interface IPRValuedItem
     {
         public string? value { get; set; }
     }
 
-    public abstract class PRKeyedList<T> : IEnumerable<T> where T : IPRKeyedValue, new()
+    public interface IPRNamedItem
+    {
+        public string name { get; set; }
+    }
+
+    public interface IPRKeyedItem
+    {
+        public string key { get; set; }
+    }
+
+    public interface IPRKeyedValueItem : IPRKeyedItem, IPRValuedItem
+    {
+    }
+
+    public interface IPRNamedValueItem : IPRNamedItem, IPRValuedItem
+    {
+    }
+
+    public abstract class PRAbstractItemList<T> : IEnumerable<T> where T : IPRValuedItem, new()
     {
         protected readonly List<T> _items = new();
 
         protected abstract string GetKey(T item);
         protected abstract void SetKey(T item, string key);
 
-        protected PRKeyedList() { }
+        protected PRAbstractItemList() { }
 
-        protected PRKeyedList(IEnumerable<T> items)
+        protected PRAbstractItemList(IEnumerable<T> items)
         {
             _items.AddRange(items);
         }
@@ -68,4 +86,19 @@ namespace Postmonster.Runtime
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
+    public class PRKeyedListOf<T> : PRAbstractItemList<T> where T : IPRKeyedValueItem, new()
+    {
+        public PRKeyedListOf() : base() { }
+        public PRKeyedListOf(IEnumerable<T> items) : base(items) { }
+        protected override string GetKey(T item) => item.key;
+        protected override void SetKey(T item, string key) => item.key = key;
+    }
+
+    public class PRNamedListOf<T> : PRAbstractItemList<T> where T : IPRNamedValueItem, new()
+    {
+        public PRNamedListOf() : base() { }
+        public PRNamedListOf(IEnumerable<T> items) : base(items) { }
+        protected override string GetKey(T item) => item.name;
+        protected override void SetKey(T item, string key) => item.name = key;
+    }
 }

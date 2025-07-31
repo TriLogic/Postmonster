@@ -21,20 +21,20 @@ namespace Postmonster.Collections
     {
     }
 
-    public interface IPCNamedValueItem : IPCKeyedItem, IPCValuedItem
+    public interface IPCNamedValueItem : IPCNamedItem, IPCValuedItem
     {
     }
 
-    public abstract class PCAbstractKeyedList<T> : IEnumerable<T> where T : IPCKeyedValueItem, new()
+    public abstract class PCAbstractItemList<T> : IEnumerable<T> where T : IPCValuedItem, new()
     {
         protected readonly List<T> _items = new();
 
         protected abstract string GetKey(T item);
         protected abstract void SetKey(T item, string key);
 
-        protected PCAbstractKeyedList() { }
+        protected PCAbstractItemList() { }
 
-        protected PCAbstractKeyedList(IEnumerable<T> items)
+        protected PCAbstractItemList(IEnumerable<T> items)
         {
             _items.AddRange(items);
         }
@@ -81,7 +81,7 @@ namespace Postmonster.Collections
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class PCKeyedListOf<T> : PCAbstractKeyedList<T> where T: IPCKeyedValueItem, new()
+    public class PCKeyedListOf<T> : PCAbstractItemList<T> where T: IPCKeyedValueItem, new()
     {
         public PCKeyedListOf() : base() { }
         public PCKeyedListOf(IEnumerable<T> items) : base(items) { }
@@ -89,12 +89,12 @@ namespace Postmonster.Collections
         protected override void SetKey(T item, string key) => item.Key = key;
     }
 
-    public class PCNamedListOf<T> : PCAbstractKeyedList<T> where T : IPCKeyedValueItem, new()
+    public class PCNamedListOf<T> : PCAbstractItemList<T> where T : IPCNamedValueItem, new()
     {
         public PCNamedListOf() : base() { }
         public PCNamedListOf(IEnumerable<T> items) : base(items) { }
-        protected override string GetKey(T item) => item.Key;
-        protected override void SetKey(T item, string key) => item.Key = key;
+        protected override string GetKey(T item) => item.Name;
+        protected override void SetKey(T item, string key) => item.Name = key;
     }
 
 }

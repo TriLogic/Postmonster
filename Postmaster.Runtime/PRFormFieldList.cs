@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Postmonster.Runtime
 {
-    public class PRFormFieldList : PRKeyedList<PRFormField>
+    public class PRFormFieldList : PRKeyedListOf<PRFormField>
     {
         public PRFormFieldList() : base() { }
         public PRFormFieldList(IEnumerable<PRFormField> items) : base(items) { }
-        protected override string GetKey(PRFormField item) => item.key;
-        protected override void SetKey(PRFormField item, string key) => item.key = key;
     }
 }
