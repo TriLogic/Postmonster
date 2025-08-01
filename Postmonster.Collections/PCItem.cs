@@ -15,6 +15,7 @@ namespace Postmonster.Collections
         public PCItem? Next { get; set; }
         public List<PCItem>? Items { get; set; }
         public bool HasChildren();
+        public void Link(IPCItem? parent);
     }
 
     public class PCItem : IPCItem
@@ -43,7 +44,13 @@ namespace Postmonster.Collections
 
         [JsonIgnore()]
         public PCItem? Next { get; set; }
+        
         public bool HasChildren() => Items?.Count > 0;
+
+        public void Link(IPCItem? parent)
+        {
+            PCTree.Link(this, parent);
+        }
         #endregion
     }
 }

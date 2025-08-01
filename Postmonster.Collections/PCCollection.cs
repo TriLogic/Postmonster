@@ -62,37 +62,10 @@ namespace Postmonster.Collections
             return LoadFromString(json);
         }
 
-        #region Recursive Descent Linker
-        public static void Link(IPCItem item, IPCItem? parent = null)
+        public void Link(IPCItem? parent = null)
         {
-            item.Parent = parent;
-
-            PCItem? prev = null;
-            if (item.Items != null && item.Items.Count > 0)
-            {
-                item.Items.ForEach(child => {
-
-                    // set the child's prev to prev
-                    child.Prev = prev;
-
-                    // set the prev's next to child
-                    if (prev != null)
-                        prev.Next = child;
-
-                    // set prev ro current child
-                    prev = child;
-
-                    // link the child
-                    Link(child, item);
-                });
-            }
+            PCTree.Link(this, null);
         }
-
-        public void Link()
-        {
-            Link(this, null);
-        }
-        #endregion
     }
 
 }
