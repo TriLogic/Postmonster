@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Postmonster.Collections
 {
@@ -51,4 +46,37 @@ namespace Postmonster.Collections
         [JsonProperty("value")]
         public string Value { get; set; } = "";
     }
+
+    public class PCUrlConverter : JsonConverter<PCUrl>
+    {
+        public override PCUrl ReadJson(JsonReader reader, Type objectType, PCUrl existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.String)
+            {
+                // Simple string URL
+                return new PCUrl { Raw = reader.Value?.ToString() ?? string.Empty };
+            }
+            else if (reader.TokenType == JsonToken.StartObject)
+            {
+                // Structured PCUrl
+                return serializer.Deserialize<PCUrl>(reader) ?? new PCUrl();
+            }
+
+            return new PCUrl();
+        }
+
+        public override void WriteJson(JsonWriter writer, PCUrl value, JsonSerializer serializer)
+        {
+            if (value.Protocol == null && value.Host == null && value.Path == null)
+            {
+                // Serialize as simple string if only Raw is set
+                writer.WriteValue(value.Raw);
+            }
+            else
+            {
+                serializer.Serialize(writer, value);
+            }
+        }
+    }
+
 }

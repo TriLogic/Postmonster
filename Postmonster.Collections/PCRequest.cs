@@ -10,7 +10,8 @@ namespace Postmonster.Collections
     public class PCRequest
     {
         [JsonProperty("url")]
-        public string Url { get; set; } = string.Empty;
+        [JsonConverter(typeof(PCUrlConverter))]
+        public PCUrl? Url { get; set; }
 
         [JsonProperty("method")]
         public string Method { get; set; } = "GET";
