@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 namespace Postmonster.Collections
 {
-    public interface IPCItem
+    public interface IPCItem : IEnumerable<IPCItem>
     {
         public string Name { get; set; }
         public IPCItem? Parent { get; set; }
@@ -58,6 +60,14 @@ namespace Postmonster.Collections
         public bool IsItem { get => true; }
         public PCItem AsItem() => this;
 
+        #endregion
+
+        #region IEnumerable
+        public IEnumerator<IPCItem> GetEnumerator()
+        {
+            return (Items ?? Enumerable.Empty<PCItem>()).GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
     }
 }

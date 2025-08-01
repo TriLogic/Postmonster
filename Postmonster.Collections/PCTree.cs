@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,7 +138,7 @@ namespace Postmonster.Collections
 
             // Search prev siblings
             IPCItem item = node.Prev;
-            while(item != null)
+            while (item != null)
             {
                 if (string.Compare(item.Name, name, true) == 0)
                     return node as PCItem;
@@ -160,6 +161,21 @@ namespace Postmonster.Collections
 
             // Some items will be searched twice - collections are not that large.
             return global ? SearchDeep(name, node, true) : null;
+        }
+
+        public static void VisitDepthFirst(IPCItem item, Action<IPCItem> visitFn)
+        {
+            // visit the item
+            visitFn(item);
+
+            // visit child items
+            if (item.Items != null)
+            {
+                foreach (var childItem in item.Items)
+                {
+                    VisitDepthFirst(childItem, visitFn);
+                }
+            }
         }
 
     }

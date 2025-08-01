@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Reflection.Metadata.Ecma335;
 
 namespace Postmonster.Collections
@@ -72,6 +73,14 @@ namespace Postmonster.Collections
         public bool IsItem { get => false; }
 
         public PCItem AsItem() => throw new Exception("Not a PCItem");
+
+        #region IEnumerable
+        public IEnumerator<IPCItem> GetEnumerator()
+        {
+            return (Items ?? Enumerable.Empty<PCItem>()).GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        #endregion
     }
 
 }
