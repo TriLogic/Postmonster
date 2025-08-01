@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Postmonster.Collections
 {
@@ -22,7 +23,7 @@ namespace Postmonster.Collections
 
         #region IPCItem Collection Extensions
         [JsonIgnore()]
-        public string? Name { get => Info?.Name; set { if (Info != null && value != null) { Info.Name = value; }  } }
+        public string? Name { get => Info?.Name; set { if (Info != null && value != null) { Info.Name = value; } } }
 
         [JsonIgnore()]
         public IPCItem? Parent { get => null; set { } }
@@ -66,6 +67,11 @@ namespace Postmonster.Collections
         {
             PCTree.Link(this, null);
         }
+
+        [JsonIgnore()]
+        public bool IsItem { get => false; }
+
+        public PCItem AsItem() => throw new Exception("Not a PCItem");
     }
 
 }
