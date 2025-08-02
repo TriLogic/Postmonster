@@ -21,7 +21,8 @@ namespace Postmonster.Collections
             PCItem? prev = null;
             if (item.Items != null && item.Items.Count > 0)
             {
-                item.Items.ForEach(child => {
+                item.Items.ForEach(child =>
+                {
 
                     // set the child's prev to prev
                     child.Prev = prev;
@@ -162,21 +163,5 @@ namespace Postmonster.Collections
             // Some items will be searched twice - collections are not that large.
             return global ? SearchDeep(name, node, true) : null;
         }
-
-        public static void VisitDepthFirst(IPCItem item, Action<IPCItem> visitFn)
-        {
-            // visit the item
-            visitFn(item);
-
-            // visit child items
-            if (item.Items != null)
-            {
-                foreach (var childItem in item.Items)
-                {
-                    VisitDepthFirst(childItem, visitFn);
-                }
-            }
-        }
-
     }
 }
