@@ -10,18 +10,24 @@ namespace Postmonster.Runtime
         [JsonIgnore]
         public IReadOnlyDictionary<string, string> All => _vars;
 
-        public bool has(string key) => _vars.ContainsKey(key);
+        public bool has(string key) => 
+            _vars.ContainsKey(key);
 
-        public string? get(string key) =>
+        public string? get(string key) => 
             _vars.TryGetValue(key, out var val) ? val : null;
 
-        public void get(string key, string value) =>
+        public void set(string key, string value)
+        {
+            if (_vars.ContainsKey(key)) 
+                _vars.Remove(key);
             _vars[key] = value;
+        }
 
         public void unset(string key) =>
             _vars.Remove(key);
 
-        public void clear() => _vars.Clear();
+        public void clear() => 
+            _vars.Clear();
 
         [JsonExtensionData]
         public Dictionary<string, JToken> DynamicData
