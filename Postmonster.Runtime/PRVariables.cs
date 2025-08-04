@@ -19,10 +19,19 @@ namespace Postmonster.Runtime
 
     public partial class PRVariables : IPRVariables
     {
-        private readonly Dictionary<string, string> _vars = new();
+        private readonly Dictionary<string, string?> _vars = new();
+
+        public PRVariables()
+        {
+        }
+
+        public PRVariables(Dictionary<string, string?> vars)
+        {
+            _vars = new();
+        }
 
         [JsonIgnore]
-        public IReadOnlyDictionary<string, string> All => _vars;
+        public IReadOnlyDictionary<string, string?> All => _vars;
 
         public bool has(string key) => 
             _vars.ContainsKey(key);

@@ -4,37 +4,49 @@ namespace Postmonster.Runtime
 {
     public partial class PRPm
     {
-        public PRPm(/* ctor deps here */)
+        public PRPm()
         {
-            // init locals, env, etc. first...
+            setVariableScoping();
+        }
 
+        public PRPm(Dictionary<string, string?>? data)
+        {
+            iterationData = data == null ? null : new PRReadOnlyWrapper(new PRVariables(data));
+        }
+
+        public PRPm(PRVariables data)
+        {
+            iterationData = data == null ? null : new PRReadOnlyWrapper(data);
+        }
+
+        private void setVariableScoping()
+        {
             variables = new PRPmVariableScope(
                 hasser: key => this.getVariablesFor(key) != null,
                 getter: key => {
                     var owner = getVariablesFor(key);
                     return owner != null ? owner.get(key) : locals.get(key);
                 },
-                setter: (key, value) => { 
-                    locals.set(key, value); 
+                setter: (key, value) => {
+                    locals.set(key, value);
                 },
-                unsetter: key => { 
-                    locals.unset(key); 
+                unsetter: key => {
+                    locals.unset(key);
                 },
-                clearer: () => { 
-                    locals.clear(); 
+                clearer: () => {
+                    locals.clear();
                 }
             );
         }
 
         public PRRequest request { get; set; } = new();
         public PRResponse response { get; set; } = new();
-
         public PRPmVariableScope variables { get; set; }
         public PRVariables locals { get; set; } = new();
         public PRVariables environment { get; set; } = new();
         public PRVariables collectionVariables { get; set; } = new();
         public PRVariables globals { get; set; } = new();
-        public PRVariables iterationData { get; set; } = new();
+        public PRReadOnlyWrapper? iterationData { get; internal set;}
         public PRExecutionInfo info { get; set; } = new();
         public PAExpect expect { get; set; } = new();
 
